@@ -35,10 +35,6 @@ public class PogoController : MonoBehaviour
         {
             SceneManager.LoadScene("Base");
         }
-    }
-
-    void FixedUpdate()
-    {
 
         // tilt control
         if (Input.GetKey("a") || Input.GetKey("left"))
@@ -53,8 +49,10 @@ public class PogoController : MonoBehaviour
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, 0), smoothenRotation);
         }
+    }
 
-
+    void FixedUpdate()
+    {
         // get the raycast hit
         Vector3 position = transform.position;
         RaycastHit2D hit = Physics2D.Raycast(position, -transform.up, _raycastLength);
@@ -94,7 +92,7 @@ public class PogoController : MonoBehaviour
         // check if we are breaking
         // and add breaking force addording to angle
         float angleDeg = angle * Mathf.Rad2Deg;
-        float breakForce = Mathf.Abs(90 - angleDeg) / 10f;
+        float breakForce = Mathf.Abs(90 - angleDeg) / 20f;
 
         // Debug.Log("breakForce" + breakForce);
 
@@ -102,7 +100,7 @@ public class PogoController : MonoBehaviour
         {
             x = -breakForce;
         }
-        else if (angle < 90 && xVel < 0)
+        else if (angleDeg < 90 && xVel < 0)
         {
             x = breakForce;
         }
